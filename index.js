@@ -17,21 +17,39 @@ function start() {
 
         // 3. search for zip (source)
 
-        filesearch.filesearchwithExtension('./old', 'Math.zip', function(filename){
-                console.log(filename);     
-                // 4. extract zip (source)
-                zip.extract(filename, "source");
-        });
+        // filesearch.filesearchwithExtension('./old', 'Math.zip', function(filename){
+        //         // console.log(filename);     
+        //         // 4. extract zip (source)
+
+        //         var removespaces = filename.replace(/ /g,"\\ ");
+
+        //         zip.extract(removespaces, "source", function(output, stderr, error){
+        //                 if(error) {
+        //                   console.log(error);
+        //                 }else{
+        //                    console.log(output);
+        //                 }
+        //         });
+        // });
 
      
 
         // 5. search for zip (target)
 
-        filesearch.filesearchwithExtension('./new', 'Math.zip', function(filename){
-                console.log(filename);
-                  // 6. extract zip (target)
-                 zip.extract(filename, "target");
-        });
+        // filesearch.filesearchwithExtension('./new', 'Math.zip', function(filename){
+        //         // console.log(filename);
+        //           // 6. extract zip (target)
+
+        //           var removespaces = filename.replace(/ /g,"\\ ");
+
+        //          zip.extract(removespaces, "target", function(output, stderr, error){
+        //                 if(error) {
+        //                   console.log(error);
+        //                 }else{
+        //                    console.log(output);
+        //                 }
+        //         });
+        // });
 
         // 7. search for csv (source)
 
@@ -42,7 +60,7 @@ function start() {
 
                 var pathArray = csvfilepath.split("/");
                 var basePath = '';
-                 var targetPath = "target";
+                 var targetPath = "./target";
                 
                 for(var index = 1; index < pathArray.length; index++){
                         if(index != (pathArray.length - 1)) {
@@ -62,9 +80,9 @@ function start() {
                               filesearch.diff(csvfilepath, foundcsvpath, function(output){
                                  
                                  console.log(output);
-                                 console.log("output"+basePath);
+
                                  // 10. write output to outputfolder
-                                 filesearch.logDiff("output",targetFileName,output);
+                                //  filesearch.logDiff("output",targetFileName,output);
 
                               });
                 });

@@ -1,16 +1,13 @@
 var extract = require('extract-zip')
+var exec = require('child_process').exec;
 
 var zip = {}
 
-zip.extract = function(source, target) {
+zip.extract = function(source, target, callback) {
 
-    extract(source, {dir: target}, function (err) {
-        
-        if(err) {
-            console.log(err);
-        }
 
-    });
+     exec("unzip "+source+ " -d "+target+"/",{maxBuffer: 1024 * 10000}, function(error, stdout, stderr){ callback(stdout, stderr, error); });
+
 
 }
 

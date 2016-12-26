@@ -1,5 +1,6 @@
 var exec = require('child_process').exec;
 var path = require('path'), fs=require('fs');
+var jsdiff = require('diff');
 
 var filesearch = {};
 
@@ -47,9 +48,34 @@ filesearch.filesearchwithRegex = function (startPath,filter,callback){
 
 filesearch.diff = function (source, target, callback) {
 
-    execute('diff --unchanged-line-format="" --old-line-format="" --new-line-format=":%dn: %L '+source+" "+target, function(output) {
-        callback(output);
-    });
+    // source = source.replace(/ /g,"\\ ");
+    // target = target.replace(/ /g,"\\ ");
+
+
+    var array = fs.readFileSync(source).toString().split("\n");
+for(i in array) {
+    console.log(array[i]);
+}
+
+    // var input = fs.createReadStream(source).on('data', function(data){
+
+    //     console.log(data);
+
+    // });
+
+
+    // execute('diff --unchanged-line-format="" --old-line-format="" --new-line-format=":%dn: %L" '+source+" "+target, function(error, stdout) {
+
+    //     var output;
+
+    //     if(error) {
+    //         output = error;
+    //     }else{
+    //         output = stdout;
+    //     }
+
+    //     callback(output);
+    // });
 
 }
 
@@ -77,7 +103,7 @@ filesearch.logDiff = function(filepath,filename, content) {
  
 
 function execute(command, callback){
-    exec(command, function(error, stdout, stderr){ callback(stdout); });
+    exec(command, function(error, stdout, stderr){ callback(error, stdout); });
 };
 
 
