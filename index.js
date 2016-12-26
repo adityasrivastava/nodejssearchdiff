@@ -82,7 +82,7 @@ function start() {
                                  console.log(output);
 
                                  // 10. write output to outputfolder
-                                //  filesearch.logDiff("output",targetFileName,output);
+                                 filesearch.logDiff("output",targetFileName,output);
 
                               });
                 });

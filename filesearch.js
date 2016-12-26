@@ -9,7 +9,7 @@ filesearch.filesearchwithExtension = function (startPath, filter, callback){
     // console.log('Starting from dir '+startPath+'/');
 
     if (!fs.existsSync(startPath)){
-        // console.log("no dir ",startPath);
+        console.log("no dir ",startPath);
         return;
     }
 
@@ -52,30 +52,27 @@ filesearch.diff = function (source, target, callback) {
     // target = target.replace(/ /g,"\\ ");
 
 
-    var array = fs.readFileSync(source).toString().split("\n");
-for(i in array) {
-    console.log(array[i]);
-}
+    var sourceArray = fs.readFileSync(source).toString().split("\n");
+    var targetArray = fs.readFileSync(target).toString().split("\n");
+        
 
-    // var input = fs.createReadStream(source).on('data', function(data){
+    var diff_  = jsdiff.diffArrays(sourceArray, targetArray);    
 
-    //     console.log(data);
+    // console.log(diff_);
 
-    // });
+    diff_.forEach(function(part){
 
+        if(part.removed) {
+            console.log("Removed:",part); 
+            callback("Removed"+part);
+        }
 
-    // execute('diff --unchanged-line-format="" --old-line-format="" --new-line-format=":%dn: %L" '+source+" "+target, function(error, stdout) {
+        if(part.added) {
+            console.log("Added:",part);
+              callback("Added:"+ part);
+        }
+    })
 
-    //     var output;
-
-    //     if(error) {
-    //         output = error;
-    //     }else{
-    //         output = stdout;
-    //     }
-
-    //     callback(output);
-    // });
 
 }
 
@@ -99,8 +96,6 @@ filesearch.logDiff = function(filepath,filename, content) {
     });
 
 }
-
- 
 
 function execute(command, callback){
     exec(command, function(error, stdout, stderr){ callback(error, stdout); });
