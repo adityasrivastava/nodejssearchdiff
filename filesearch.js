@@ -1,6 +1,7 @@
 var exec = require('child_process').exec;
 var path = require('path'), fs=require('fs');
 var jsdiff = require('diff');
+var jsonfile = require('jsonfile');
 
 var filesearch = {};
 
@@ -61,16 +62,16 @@ filesearch.diff = function (source, target, callback) {
     // console.log(diff_);
 
     diff_.forEach(function(part){
+ callback(part);
+        // if(part.removed) {
+        //     // console.log("Removed:",part); 
+        //     callback(part);
+        // }
 
-        if(part.removed) {
-            console.log("Removed:",part); 
-            callback("Removed"+part);
-        }
-
-        if(part.added) {
-            console.log("Added:",part);
-              callback("Added:"+ part);
-        }
+        // if(part.added) {
+        //     // console.log("Added:",part);
+        //       callback(part);
+        // }
     })
 
 
@@ -84,16 +85,22 @@ filesearch.createdir = function(dir) {
 
 filesearch.logDiff = function(filepath,filename, content) {
 
-    filesearch.createdir(filepath);
-
-    filepath = filepath.replace(" ", "");
-
-    fs.writeFile(filepath +"/"+filename , content , function(err) {
+    fs.writeFile(filepath+"/"+filename, JSON.stringify(content, null, 4), function(err){
         if(err) {
             return console.log(err);
         }
-        console.log("The file was saved!");
     });
+
+    // filesearch.createdir(filepath);
+    // console.log(content);
+    // filepath = filepath.replace(" ", "");
+
+    // fs.writeFile(filepath +"/"+filename , content.value , function(err) {
+    //     if(err) {
+    //         return console.log(err);
+    //     }
+    //     console.log("The file was saved!");
+    // });
 
 }
 

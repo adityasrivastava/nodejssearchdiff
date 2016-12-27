@@ -78,9 +78,6 @@ function start() {
                         console.log(foundcsvpath);
                               // 9. diff both source & target
                               filesearch.diff(csvfilepath, foundcsvpath, function(output){
-                                 
-                                 console.log(output);
-
                                  // 10. write output to outputfolder
                                  filesearch.logDiff("output",targetFileName,output);
 
