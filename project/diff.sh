@@ -5,13 +5,25 @@
 # command eg: ./scorace-upload.sh http://localhost:8090/upload .
 
     #    mkdir -p source
-     #   mkdir -p target
+    #    mkdir -p target
 
-    #    find ./old -name "Math.zip" -exec unzip {} -d ./source \;
+    #    find ../old -name "*.zip" -exec unzip {} -d ./source \;
 
-    #    find ./new -name "Math.zip" -exec unzip {} -d ./target \;
+    #    find ../new -name "*.zip" -exec unzip {} -d ./target \;
+
+COUNTER=0;
+
+find . -type d -print0 | \
+  while read -d $'\0' f; do mv -v "$f" "${f// /_}"; done
+
+find . -name "*.csv" -type f -print0 | \
+  while read -d $'\0' f; do mv -v "$f" "${f// /_}"; done
 
 while IFS= read -r -d $'\0' file; do
+
+                COUNTER=$[$COUNTER+1];
+
+                echo $COUNTER
 
                 echo -e "\033[0;96m Diff....please wait... CONTENT : $file"
                 echo ""
@@ -38,16 +50,18 @@ while IFS= read -r -d $'\0' file; do
 
                  mkdir -p output
 
-                outputdiff=$(echo output/${csvfilename})
+                outputdiff=$(echo output/${COUNTER}_${csvfilename})
 
                 echo $outputdiff
 
                                 sourcepath=$(echo "$sourcepath" | sed 's/ /\\ /g')
                                 targetpath=$(echo "$targetpath" | sed 's/ /\\ /g')
 
+                                outputdiff=$(echo $outputdiff | sed 's/ //g')
+
                                 touch $outputdiff
 
-                                echo $outputdiff | sed 's/ //g'
+                                
 
                # mkdir -p $outputpath
 
